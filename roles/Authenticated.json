@@ -1,0 +1,84 @@
+{
+    "Description": "Default role that is applied to all authenticated users",
+    "Name": "Authenticated",
+    "Permissions": {
+        "AllCollections": {
+            "Level": 15
+        },
+        "AllExternalDatabases": {
+            "Level": 0
+        },
+        "AllServices": {
+            "Level": 15
+        },
+        "CodeServices": [
+            {
+                "Level": 1,
+                "Name": "configService"
+            }
+        ],
+        "Collections": [
+            {
+                "Columns": [],
+                "Items": [],
+                "Level": 15,
+                "Name": "result"
+            }
+        ],
+        "Deployments": {
+            "Level": 15
+        },
+        "DevicesList": {
+            "Level": 0
+        },
+        "EdgesList": {
+            "Level": 15
+        },
+        "ExternalDatabases": [],
+        "ManageUsers": {
+            "Level": 0
+        },
+        "MsgHistory": {
+            "Level": 9
+        },
+        "Portals": [],
+        "Push": {
+            "Level": 0
+        },
+        "Roles": {
+            "Level": 0
+        },
+        "ServiceCaches": [],
+        "Timers": {
+            "Level": 0
+        },
+        "Topics": [
+            {
+                "Level": 15,
+                "Name": "$trigger/#"
+            },
+            {
+                "Level": 15,
+                "Name": "$timer/#"
+            },
+            {
+                "Level": 3,
+                "Name": "#"
+            },
+            {
+                "Level": 3,
+                "Name": "send/_broadcast"
+            },
+            {
+                "Level": 3,
+                "Name": "result/_broadcast"
+            }
+        ],
+        "Triggers": {
+            "Level": 0
+        },
+        "UsersList": {
+            "Level": 0
+        }
+    }
+}

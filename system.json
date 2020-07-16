@@ -1,0 +1,9 @@
+{
+    "auth": true,
+    "description": "",
+    "messaging_url": "platform.clearblade.com:1883",
+    "name": "Object-Detection",
+    "platform_url": "https://platform.clearblade.com",
+    "system_key": "bacbe6f00b8cc5ce84b2f1e4f4f001",
+    "system_secret": "BACBE6F00BCAC9E5A7CC89C7DF79"
+}
