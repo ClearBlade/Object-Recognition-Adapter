@@ -15,8 +15,7 @@ detectable_objects = {'person': 'invalid', 'bicycle': 'invalid', 'car': 'invalid
                       'bottle': 'invalid', 'wine glass': 'invalid', 'cup': 'invalid', 'fork': 'invalid', 'knife': 'invalid', 'spoon': 'invalid', 'bowl': 'invalid', 'banana': 'invalid', 'apple': 'invalid', 'sandwich': 'invalid', 'orange': 'invalid', 'broccoli': 'invalid', 'carrot': 'invalid', 'hot dog': 'invalid', 'pizza': 'invalid', 'donut': 'invalid', 'cake': 'invalid', 'chair': 'invalid', 'couch': 'invalid', 'potted plant': 'invalid', 'bed': 'invalid', 'dining table': 'invalid', 'toilet': 'invalid', 'tv': 'invalid', 'laptop': 'invalid', 'mouse': 'invalid', 'remote': 'invalid', 'keyboard': 'invalid', 'cell phone': 'invalid', 'microwave': 'invalid', 'oven': 'invalid', 'toaster': 'invalid', 'sink': 'invalid', 'refrigerator': 'invalid', 'book': 'invalid', 'clock': 'invalid', 'vase': 'invalid', 'scissors': 'invalid', 'teddy bear': 'invalid', 'hair dryer': 'invalid', 'toothbrush': 'invalid'}
 
 frames = 0
-result_collection = ""
-user_token = ""
+adapter = ''
 
 def VideoObject():
     detector = VideoObjectDetection()
@@ -37,54 +36,36 @@ def forFrame(frame_number, output_array, output_count, returned_frame):
     print("------------------------")
 
     if(len(output_array) != 0):
-        header = {
-            "ClearBlade-UserToken": user_token,
-            "systemKey": os.getenv('CB_SYSTEM_KEY'),
-            "collectionName": result_collection}
-
-        body = []
         global frames
         timestamp = (frame_number * (1000/frames))/1000
 
         image = ''
-        objects = []
-        probability = []
-        for obj in output_array:
-            objects.append(obj["name"])
-            probability.append(obj["percentage_probability"])
-            #body.append(
-            #    {"detected_object": ,
-            #     "confidence": obj["percentage_probability"],
-            #     "time_stamp_secs": timestamp})
-            image += obj["name"] + '_'
 
-        body.append({"detected_object":str(objects),"confidence":str(probability),"time_stamp_secs": timestamp})
-        url = "https://platform.clearblade.com/api/v/1/collection/"+os.getenv('CB_SYSTEM_KEY')+'/'+result_collection
-        response = requests.post(url, headers=header, data=json.dumps(body))
-        
+        for obj in output_array:
+            image += obj["name"] + '_'
+            obj['approx_time_stamp_secs'] = timestamp
+            box_points = obj.pop('box_points')
+
+        global adapter
+        adapter.publish("results/_broadcast", str(output_array))
 
         image_name = 'images/' + image + str(timestamp) + '.jpg'
         #cv2.imwrite(image_name, returned_frame)
 
 
-def Recognize(fps, confidence, objects, collection, detection_interval, token, video_path):
+def Recognize(adapterLibrary, video_path, fps, confidence, detection_interval, objects):
     detector = VideoObject()
-    detector = LoadModel(
-        detector, "yolo-tiny.h5")
+    detector = LoadModel(detector, "yolo-tiny.h5")
 
     for obj in objects:
         if obj in detectable_objects:
             detectable_objects[obj] = 'valid'
 
-    # custom_objects = detector.CustomObjects(person=person, boat=boat)
     global frames
     frames = fps
 
-    global result_collection
-    result_collection = collection
-
-    global user_token
-    user_token = token
+    global adapter
+    adapter = adapterLibrary
 
     if(detection_interval < 1):
         frame_detection_interval = 1

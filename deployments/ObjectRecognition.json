@@ -9,6 +9,14 @@
             "sync_to_platform": true
         },
         {
+            "asset_class": "adapter_config",
+            "asset_id": "",
+            "deployment": "ObjectRecognition",
+            "member": "ObjectRecognition_deployment_edge_group",
+            "sync_to_edge": true,
+            "sync_to_platform": true
+        },
+        {
             "asset_class": "adaptors",
             "asset_id": "",
             "deployment": "ObjectRecognition",

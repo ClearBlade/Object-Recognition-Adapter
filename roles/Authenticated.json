@@ -11,18 +11,13 @@
         "AllServices": {
             "Level": 15
         },
-        "CodeServices": [
-            {
-                "Level": 1,
-                "Name": "configService"
-            }
-        ],
+        "CodeServices": [],
         "Collections": [
             {
                 "Columns": [],
                 "Items": [],
                 "Level": 15,
-                "Name": "result"
+                "Name": "adapter_config"
             }
         ],
         "Deployments": {
@@ -64,14 +59,6 @@
             {
                 "Level": 3,
                 "Name": "#"
-            },
-            {
-                "Level": 3,
-                "Name": "send/_broadcast"
-            },
-            {
-                "Level": 3,
-                "Name": "result/_broadcast"
             }
         ],
         "Triggers": {

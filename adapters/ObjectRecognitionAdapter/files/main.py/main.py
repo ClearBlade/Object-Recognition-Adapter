@@ -4,30 +4,29 @@ import json
 import recognition
 import os
 
-def handleMessage(message):
-    print("\nMessage Received: ", str(message.payload))
-    payload = json.loads(message.payload.decode("utf-8"))
-    recognition.Recognize(
-        payload['fps'],
-        payload['confidence'],
-        payload['customObjects'],
-        payload['resultCollection'],
-        payload['detection_interval'],
-        payload['token'],
-        payload['video_path'])
-
-
-def main():
-    adapterLibrary = AdapterLibrary('ObjectRecognitionAdapter')
-    adapterLibrary.parse_arguments()
-    adapterLibrary.initialize_clearblade()
-    adapterLibrary.connect_MQTT(
-        topic='send/_broadcast', cb_message_handler=handleMessage)
-    print("\n-------------------------\n")
-    print("Listening......\n")
-    while(True):
-        time.sleep(1)
-
+ADAPTER_NAME = 'ObjectRecognitionAdapter'
 
 if __name__ == "__main__":
-    main()
+    adapterLibrary = AdapterLibrary(ADAPTER_NAME)
+    adapterLibrary.parse_arguments()
+    adapter_config = adapterLibrary.initialize_clearblade()
+    
+    print("\nAdapter Config - \n", adapter_config)
+
+    adapterLibrary.connect_MQTT()
+    
+    while(True):
+        if(adapterLibrary.CONNECTED_FLAG):
+            recognition.Recognize(
+                adapterLibrary,
+                adapter_config['adapter_settings']['path'],
+                adapter_config['adapter_settings']['fps'],
+                adapter_config['adapter_settings']['confidence'],
+                adapter_config['adapter_settings']['detection_interval'],
+                adapter_config['adapter_settings']['customObjects'])
+            
+            adapterLibrary.disconnect_MQTT()
+            break
+
+        else:
+            continue

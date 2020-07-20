@@ -1,3 +1,29 @@
 {
-    "columns": []
+    "columns": [
+        {
+            "ColumnName": "url",
+            "ColumnType": "string",
+            "PK": false
+        },
+        {
+            "ColumnName": "fps",
+            "ColumnType": "int",
+            "PK": false
+        },
+        {
+            "ColumnName": "confidence",
+            "ColumnType": "int",
+            "PK": false
+        },
+        {
+            "ColumnName": "detection_interval",
+            "ColumnType": "int",
+            "PK": false
+        },
+        {
+            "ColumnName": "customobjects",
+            "ColumnType": "string",
+            "PK": false
+        }
+    ]
 }

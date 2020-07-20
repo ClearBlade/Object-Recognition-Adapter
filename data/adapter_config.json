@@ -1,0 +1,33 @@
+{
+    "items": [
+        {
+            "adapter_name": "ObjectRecognitionAdapter",
+            "adapter_settings": "{\"path\":\"IMG_9322_1.MP4\",\"fps\":1,\"confidence\":45,\"detection_interval\":1,\"customObjects\":[\"person\",\"boat\"]}",
+            "item_id": "77ea4d42-7509-4b6a-886a-3f8041d7a29f",
+            "topic_root": ""
+        }
+    ],
+    "name": "adapter_config",
+    "schema": [
+        {
+            "ColumnName": "item_id",
+            "ColumnType": "uuid",
+            "PK": true
+        },
+        {
+            "ColumnName": "adapter_name",
+            "ColumnType": "string",
+            "PK": false
+        },
+        {
+            "ColumnName": "topic_root",
+            "ColumnType": "string",
+            "PK": false
+        },
+        {
+            "ColumnName": "adapter_settings",
+            "ColumnType": "string",
+            "PK": false
+        }
+    ]
+}

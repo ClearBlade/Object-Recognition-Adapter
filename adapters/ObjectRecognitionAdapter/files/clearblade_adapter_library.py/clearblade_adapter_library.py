@@ -8,14 +8,23 @@ import random
 from clearblade.ClearBladeCore import System, Query, cbLogs, Users
 
 
-# $CB_SERVICE_ACCOUNT $CB_SERVICE_ACCOUNT_TOKEN
-
 class AdapterLibrary:
 
     DEFAULT_LOG_LEVEL = "info"
     DEFAULT_PLATFORM_URL = "http://localhost:9000"
     DEFAULT_MESSAGING_URL = "localhost:1883"
     DEFAULT_ADAPTER_CONFIG_COLLECTION_NAME = "adapter_config"
+    DEFAULT_ADAPTER_SETTINGS = {
+        "url": "IMG_9322_1.MP4",
+        "fps": 1,
+        "confidence": 45,
+        "detection_interval": 1,
+        "customObjects": [
+            "person",
+            "boat"
+        ]
+    }
+    CONNECTED_FLAG = 0
 
     SYSTEM_KEY_ARG_KEY = "CB_SYSTEM_KEY"
     SYSTEM_SECRET_ARG_KEY = "CB_SYSTEM_SECRET"
@@ -85,7 +94,7 @@ class AdapterLibrary:
         else:
             self.__auth_with_device()
 
-        # return self.__fetch_adapter_config()
+        return self.__fetch_adapter_config()
 
     def connect_MQTT(self, topic="", cb_message_handler=None):
         cbLogs.info(
@@ -109,6 +118,7 @@ class AdapterLibrary:
     def disconnect_MQTT(self):
         cbLogs.info(
             "AdapterLibrary - disconnect_MQTT - Disconnecting from ClearBlade MQTT message broker")
+        print('\n\nDisconnecting MQTT...\n')
         self._cb_mqtt.disconnect()
 
     def __auth_with_service_account(self):
@@ -116,7 +126,6 @@ class AdapterLibrary:
             "AdapterLibrary - __auth_with_service_account - Authenticating as service account")
         self._device_client = self._cb_system.ServiceUser(
             self._args[self.SERVICE_ACCOUNT_ARG_KEY], self._args[self.SERVICE_ACCOUNT_TOKEN_ARG_KEY])
-        #self._device_client = self._cb_system.User('ai@cb.com','test')
 
     def __auth_with_device(self):
         cbLogs.info(
@@ -129,7 +138,7 @@ class AdapterLibrary:
             "AdapterLibrary - __fetch_adapter_config - Retrieving adapter config")
 
         adapter_config = {
-            "topic_root": self.adapter_name, "adapter_settings": ""}
+            "adapter_name": self.adapter_name, "adapter_settings": ""}
 
         collection = self._cb_system.Collection(
             self._device_client, collectionName=self._args[self.ADAPTER_CONFIG_COLLECTION_NAME_ARG_KEY])
@@ -144,7 +153,10 @@ class AdapterLibrary:
                 adapter_config["topic_root"] = str(rows[0]["topic_root"])
             if rows[0]["adapter_settings"] != "":
                 raw_json = json.loads(str(rows[0]["adapter_settings"]))
-                adapter_config["adapter_settings"] = self.__byteify(raw_json)
+                # adapter_config["adapter_settings"] = self.__byteify(raw_json)
+                adapter_config["adapter_settings"] = raw_json
+            else:
+                adapter_config["adapter_settings"] = self.DEFAULT_ADAPTER_SETTINGS
         else:
             cbLogs.warn("No adapter config found for adapter name " +
                         self.adapter_name + ". Using defaults")
@@ -156,6 +168,8 @@ class AdapterLibrary:
     def __on_MQTT_connect(self, client, userdata, flags, rc):
         cbLogs.info(
             "AdapterLibrary - __on_MQTT_connect - MQTT successfully connected!")
+        print('\nConnected - Listening....\n')
+        self.CONNECTED_FLAG = 1
         if self._sub_topic != None:
             self._cb_mqtt.subscribe(self._sub_topic)
 
@@ -187,8 +201,6 @@ class AdapterLibrary:
                 cbLogs.info(
                     "Setting adapter arguments from environment variable: " + var + ": " + str(env[var]))
                 self._args[var] = env[var]
-        # self._args['CB_SERVICE_ACCOUNT'] = 'user@cb.com'
-        # self._args['CB_SERVICE_ACCOUNT_TOKEN'] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI5ZWVhZWVmMDBiZDRlYWJmZmFhZTgwODViMzY2Iiwic2lkIjoiYjQ3ZDQyMzAtZjBkNi00OTk5LWJmM2MtNDM5ZmQzZTdkZjgxIiwidXQiOjIsInR0IjoxLCJleHAiOi0xLCJpYXQiOjE1OTQ3NDM0Mzl9.8NN540hwrxkE33FD7_vS28KOmEJVY7ZGB8rP3xQzR-w"
 
     def __parse_flags(self):
         """Parse the command line arguments"""
@@ -238,10 +250,13 @@ class AdapterLibrary:
         # https://stackoverflow.com/a/13105359
         if isinstance(input, dict):
             return {self.__byteify(key): self.__byteify(value)
-                    for key, value in input.iteritems()}
+                    for key, value in input.items()}
         elif isinstance(input, list):
             return [self.__byteify(element) for element in input]
         elif isinstance(input, unicode):
             return input.encode('utf-8')
         else:
             return input
+
+    def printMes(self):
+        print("hello")
