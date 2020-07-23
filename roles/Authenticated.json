@@ -36,7 +36,12 @@
         "MsgHistory": {
             "Level": 9
         },
-        "Portals": [],
+        "Portals": [
+            {
+                "Level": 5,
+                "Name": "ObjectDetectionPortal"
+            }
+        ],
         "Push": {
             "Level": 0
         },
@@ -59,6 +64,18 @@
             {
                 "Level": 3,
                 "Name": "#"
+            },
+            {
+                "Level": 3,
+                "Name": "start"
+            },
+            {
+                "Level": 3,
+                "Name": "start/_broadcast"
+            },
+            {
+                "Level": 3,
+                "Name": "results/_broadcast"
             }
         ],
         "Triggers": {

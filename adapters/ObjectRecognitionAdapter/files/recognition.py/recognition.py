@@ -9,6 +9,8 @@ import dlib
 import math
 import requests
 import json
+import base64
+import time
 from clearblade.ClearBladeCore import System
 
 detectable_objects = {'person': 'invalid', 'bicycle': 'invalid', 'car': 'invalid', 'motorcycle': 'invalid', 'airplane': 'invalid', 'bus': 'invalid', 'train': 'invalid', 'truck': 'invalid', 'boat': 'invalid', 'traffic light': 'invalid', 'fire hydrant': 'invalid', 'stop sign': 'invalid', 'parking meter': 'invalid', 'bench': 'invalid', 'bird': 'invalid', 'cat': 'invalid', 'dog': 'invalid', 'horse': 'invalid', 'sheep': 'invalid', 'cow': 'invalid', 'elephant': 'invalid', 'bear': 'invalid', 'zebra': 'invalid', 'giraffe': 'invalid', 'backpack': 'invalid', 'umbrella': 'invalid', 'handbag': 'invalid', 'tie': 'invalid', 'suitcase': 'invalid', 'frisbee': 'invalid', 'skis': 'invalid', 'snowboard': 'invalid', 'sports ball': 'invalid', 'kite': 'invalid', 'baseball bat': 'invalid', 'baseball glove': 'invalid', 'skateboard': 'invalid', 'surfboard': 'invalid', 'tennis racket': 'invalid',
@@ -40,17 +42,32 @@ def forFrame(frame_number, output_array, output_count, returned_frame):
         timestamp = (frame_number * (1000/frames))/1000
 
         image = ''
+        payload = {}
+        payload["approx_time_stamp_secs"] = str(timestamp)
+        objects = []
 
         for obj in output_array:
+            b = np.array(obj['box_points']).astype(int)
+            cv2.putText(returned_frame, obj["name"], (b[0], b[1] - 30),
+                        cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 4)
             image += obj["name"] + '_'
-            obj['approx_time_stamp_secs'] = timestamp
-            box_points = obj.pop('box_points')
+            objects.append({"name": str(obj["name"]), "percentage_probability": str(
+                round(obj["percentage_probability"], 2))})
+        
+        payload["objects"] = objects
+
+        resized_frame = cv2.resize(returned_frame, (800, 600))
+        retval, image_buffer = cv2.imencode('.jpg', resized_frame)
+        image_64_encode = base64.b64encode(image_buffer)
+
+        payload["base64_encoded_image"] = str(image_64_encode.decode("utf-8"))
 
         global adapter
-        adapter.publish("results/_broadcast", str(output_array))
+        adapter.publish("results/_broadcast", str(payload))
 
         image_name = 'images/' + image + str(timestamp) + '.jpg'
         #cv2.imwrite(image_name, returned_frame)
+        time.sleep(2)
 
 
 def Recognize(adapterLibrary, video_path, fps, confidence, detection_interval, objects):
@@ -89,6 +106,7 @@ def Recognize(adapterLibrary, video_path, fps, confidence, detection_interval, o
         frames_per_second=fps,
         per_frame_function=forFrame,
         return_detected_frame=True,
+        display_object_name=False,
         minimum_percentage_probability=confidence,
         log_progress=True,
         display_percentage_probability=False)

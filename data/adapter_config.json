@@ -2,8 +2,8 @@
     "items": [
         {
             "adapter_name": "ObjectRecognitionAdapter",
-            "adapter_settings": "{\"path\":\"IMG_9322_1.MP4\",\"fps\":1,\"confidence\":45,\"detection_interval\":1,\"customObjects\":[\"person\",\"boat\"]}",
-            "item_id": "77ea4d42-7509-4b6a-886a-3f8041d7a29f",
+            "adapter_settings": "{\"fps\":1,\"confidence\":45,\"detection_interval\":1,\"customObjects\":[\"person\",\"boat\"],\"path\":\"IMG_9322_1.MP4\"}",
+            "item_id": "bce2e499-16dd-4c42-a7ff-c9093b39b62a",
             "topic_root": ""
         }
     ],

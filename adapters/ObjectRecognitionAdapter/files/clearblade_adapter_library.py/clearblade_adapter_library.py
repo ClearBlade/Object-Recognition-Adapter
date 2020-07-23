@@ -169,7 +169,7 @@ class AdapterLibrary:
         cbLogs.info(
             "AdapterLibrary - __on_MQTT_connect - MQTT successfully connected!")
         print('\nConnected - Listening....\n')
-        self.CONNECTED_FLAG = 1
+        #self.CONNECTED_FLAG = 1
         if self._sub_topic != None:
             self._cb_mqtt.subscribe(self._sub_topic)
 

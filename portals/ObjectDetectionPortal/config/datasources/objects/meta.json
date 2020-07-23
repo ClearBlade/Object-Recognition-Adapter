@@ -1,0 +1,10 @@
+{
+    "id": "c71b30d3-aa53-43d5-b60f-984c327747b5",
+    "name": "objects",
+    "settings": {
+        "DATASOURCE_PARSER": "/**\n* The 'parser' variable is the entry point for your parser. Write logic inside of the provided function and return a value\n* Constants and utility functions can be created outside of the parser\n* The provided ctx parameter is an object that contains data and model information on this item\n* @param {context} ctx \n* @returns {rtn} */\nparser = (ctx) =\u003e {\n  return ctx.data\n}",
+        "USE_PARSER": false,
+        "defaultValue": "{\n  \"objects\": [\n    \"person\",\n    \"boat\"\n  ]\n}"
+    },
+    "type": "LOCAL_DATASOURCE_PLUGIN"
+}

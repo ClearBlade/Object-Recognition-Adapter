@@ -1,0 +1,29 @@
+#portal-pane-fpsPane, #portal-pane-confidencePane, #portal-pane-intervalPane, #portal-pane-objectsPane{
+    background-color: #4CBD8B;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px 0px;
+    text-align: center;
+}
+
+#frameText, #confidenceText, #intervalText, #detectionText{
+    text-align: center;
+}
+
+body{
+    font-family: Verdana;
+}
+
+#frameInput, #confidenceInput, #intervalInput, #detectionInput{
+    margin-top: 0.4em;
+}
+
+#portal-pane-listPane {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px 0px;
+    text-align: center;
+}
+
+#urlText{
+    margin-top: 0.4em;
+    margin-left: 1.6em
+}

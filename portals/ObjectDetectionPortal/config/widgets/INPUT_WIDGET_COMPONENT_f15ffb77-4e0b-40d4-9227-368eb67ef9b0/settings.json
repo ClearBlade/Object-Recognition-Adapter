@@ -1,0 +1,29 @@
+{
+    "dataType": "string",
+    "inputVal": {
+        "dataType": "DYNAMIC_DATA_TYPE",
+        "force_data": [
+            "CALCULATED_DATA_TYPE",
+            "DYNAMIC_DATA_TYPE"
+        ],
+        "id": "0d95379b-7989-43dd-8737-46663bc4a08e",
+        "incoming_parser": {
+            "isDebugOn": false,
+            "value": "./parsers/inputVal/incoming_parser/index.js"
+        }
+    },
+    "isReadOnly": true,
+    "label": "",
+    "target": {
+        "dataType": "DYNAMIC_DATA_TYPE",
+        "force_data": [
+            "CALCULATED_DATA_TYPE",
+            "DYNAMIC_DATA_TYPE"
+        ],
+        "id": "0d95379b-7989-43dd-8737-46663bc4a08e",
+        "outgoing_parser": {
+            "isDebugOn": false,
+            "value": "./parsers/target/outgoing_parser/index.js"
+        }
+    }
+}

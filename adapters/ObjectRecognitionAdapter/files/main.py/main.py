@@ -5,6 +5,12 @@ import recognition
 import os
 
 ADAPTER_NAME = 'ObjectRecognitionAdapter'
+CONNECTED_FLAG = 0
+
+def onMessage(payload):
+    print('Received')
+    global CONNECTED_FLAG
+    CONNECTED_FLAG = 1
 
 if __name__ == "__main__":
     adapterLibrary = AdapterLibrary(ADAPTER_NAME)
@@ -13,10 +19,10 @@ if __name__ == "__main__":
     
     print("\nAdapter Config - \n", adapter_config)
 
-    adapterLibrary.connect_MQTT()
+    adapterLibrary.connect_MQTT(topic="start/_broadcast", cb_message_handler=onMessage)
     
     while(True):
-        if(adapterLibrary.CONNECTED_FLAG):
+        if(CONNECTED_FLAG):
             recognition.Recognize(
                 adapterLibrary,
                 adapter_config['adapter_settings']['path'],

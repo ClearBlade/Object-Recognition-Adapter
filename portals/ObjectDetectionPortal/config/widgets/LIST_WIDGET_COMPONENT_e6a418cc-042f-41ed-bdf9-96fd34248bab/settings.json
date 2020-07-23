@@ -1,0 +1,34 @@
+{
+    "HAS_UNIQUE_STYLE": false,
+    "activeItemBackgroundColor": "#4cbd8b",
+    "activeItemFontColor": "#fff",
+    "enableListAutoSelect": false,
+    "eventTarget": {
+        "dataType": "DYNAMIC_DATA_TYPE",
+        "force_data": [
+            "DYNAMIC_DATA_TYPE"
+        ],
+        "id": "7f7cfd81-5d09-403c-91e4-35a611a0b315",
+        "outgoing_parser": {
+            "isDebugOn": false,
+            "value": "./parsers/eventTarget/outgoing_parser/index.js"
+        }
+    },
+    "fontColor": "#000000",
+    "htmlId": "list",
+    "listItemBackgroundColor": "#ffffff",
+    "listSource": {
+        "dataType": "DYNAMIC_DATA_TYPE",
+        "force_data": [
+            "CALCULATED_DATA_TYPE",
+            "DYNAMIC_DATA_TYPE"
+        ],
+        "id": "7f7cfd81-5d09-403c-91e4-35a611a0b315",
+        "incoming_parser": {
+            "isDebugOn": false,
+            "value": "./parsers/listSource/incoming_parser/index.js"
+        }
+    },
+    "titleColor": "#000000",
+    "trackingColumnName": "item_id"
+}

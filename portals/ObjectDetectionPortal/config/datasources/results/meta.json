@@ -1,0 +1,12 @@
+{
+    "id": "8b0c25a6-38d2-4a96-9e40-74a1e9df20e7",
+    "name": "results",
+    "settings": {
+        "CALL_ON_LOAD": true,
+        "DATASOURCE_PARSER": "./parser.js",
+        "SUPPRESS_DATASOURCE_ERRORS": true,
+        "TOPIC_NAME": "results/_broadcast",
+        "USE_PARSER": true
+    },
+    "type": "CB_MESSAGE_TOPIC"
+}
